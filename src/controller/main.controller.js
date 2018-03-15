@@ -18,7 +18,7 @@ import {SyncController} from './sync.controller';
 import PrivateKeyController from './privateKey.controller';
 import AppController from './app.controller';
 import MenuController from './menu.controller';
-import EncryptedFormController from './form.controller';
+import EncryptedFormController from './encryptedForm.controller';
 
 sub.factory.register('dFrame',              DecryptController);
 sub.factory.register('decryptCont',         DecryptController);
@@ -37,7 +37,6 @@ sub.factory.register('restoreBackupCont',   PrivateKeyController);
 sub.factory.register('app',                 AppController);
 sub.factory.register('appCont',             AppController);
 sub.factory.register('menu',                MenuController);
-sub.factory.register('encryptedForm',       EncryptedFormController);
 sub.factory.register('encryptedFormCont',   EncryptedFormController);
 
 export function initController() {

@@ -332,6 +332,7 @@ export class Keyring {
   }
 
   getKeyByAddress(emailAddr, options) {
+    options = options || {};
     if (typeof options.pub === 'undefined') {
       options.pub = true;
     }
