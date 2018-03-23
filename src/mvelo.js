@@ -430,6 +430,16 @@ mvelo.util.checkEmail = function(address) {
 };
 
 /**
+ * Validate an url
+ * @param  {String} url       The URL to validate
+ * @return {Boolean}          True if valid, false if not
+ */
+mvelo.util.checkUrl = function(url) {
+  const pattern = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gi;
+  return pattern.test(url);
+};
+
+/**
  * Inherit from mvelo.EventHandler.prototype to use the new event handling
  * apis 'on' and 'emit'.
  * @param {Port} port - port object received from runtime.connect()
