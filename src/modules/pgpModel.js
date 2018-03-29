@@ -328,6 +328,7 @@ export function verifyMessage(message, signers) {
   return Promise.resolve()
   .then(() => {
     const keys = signers.map(signer => signer.key).filter(key => key !== null);
+    console.log(keys);
     return openpgp.verify({message, publicKeys: keys});
   })
   .then(({signatures}) => {
@@ -604,4 +605,15 @@ export function getPreferences() {
 
 export function setPreferences(preferences) {
   return mvelo.storage.set('mvelo.preferences', preferences);
+}
+
+export function verifyDetachedSignature(plaintext, publicKeys, detachedSignature) {
+  return Promise.resolve()
+  .then(() => {
+    const signature = openpgp.signature.readArmored(detachedSignature);
+    const message = openpgp.message.fromText(plaintext);
+    return openpgp.verify({message, publicKeys, signature});
+  }).then(sigCheck => {
+    return sigCheck;
+  });
 }
