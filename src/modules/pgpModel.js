@@ -328,7 +328,6 @@ export function verifyMessage(message, signers) {
   return Promise.resolve()
   .then(() => {
     const keys = signers.map(signer => signer.key).filter(key => key !== null);
-    console.log(keys);
     return openpgp.verify({message, publicKeys: keys});
   })
   .then(({signatures}) => {
