@@ -612,7 +612,5 @@ export function verifyDetachedSignature(plaintext, publicKeys, detachedSignature
     const signature = openpgp.signature.readArmored(detachedSignature);
     const message = openpgp.message.fromText(plaintext);
     return openpgp.verify({message, publicKeys, signature});
-  }).then(sigCheck => {
-    return sigCheck;
-  });
+  }).then(sigCheck => sigCheck);
 }
