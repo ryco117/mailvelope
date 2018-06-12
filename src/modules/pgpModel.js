@@ -296,13 +296,14 @@ function getKeysForEncryption(keyIdsHex, keyringId) {
  * @param {String} message  message as native JavaScript string
  * @param {Object} primaryKey
  * @param {String} uiLogSource
+ * @param {String} filename
  * @return {Promise.<String>}
  */
-export function encryptMessage({keyIdsHex, keyringId, primaryKey = {}, message, uiLogSource}) {
+export function encryptMessage({keyIdsHex, keyringId, primaryKey = {}, message, uiLogSource, filename}) {
   return Promise.resolve()
   .then(() => {
     const keys = getKeysForEncryption(keyIdsHex, keyringId);
-    return openpgp.encrypt({data: message, publicKeys: keys, privateKeys: primaryKey.key})
+    return openpgp.encrypt({data: message, publicKeys: keys, privateKeys: primaryKey.key, filename})
     .then(msg => {
       logEncryption(uiLogSource, keys);
       return msg.data;
