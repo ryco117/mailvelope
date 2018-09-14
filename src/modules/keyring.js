@@ -496,6 +496,30 @@ export class Keyring {
       // check for existing keys
       checkKeyId(pubKey, this.keyring);
       const fingerprint = pubKey.primaryKey.getFingerprint();
+
+      // Use Beeswax to optionally verify fingerprint of key (ensuring lower case, no colons)
+      const fingerprintMod = fingerprint.replace(":", "").toLowerCase();
+      const beeswaxChromeId = "aikofhfngnhmglkmelpacibgpfdhnghk";
+
+      // TODO: Pass (optional) username of associated Twitter user to function from UI
+      const msg = {'fn': "user_signed", 'param': {'user': "Ryco117", 'id': fingerprintMod}};
+
+      // Connect, prepare for response and send request
+      var port = chrome.runtime.connect(beeswaxChromeId);
+      port.onMessage.addListener(function(response) {
+        if(!response || response.error) {
+          console.error("Beeswax failed to check signed PGP fingerprint:", response ? response.error : response);
+        }
+        else if(response.verified) {
+          console.log("Beeswax user " + msg.param.user + " signed PGP fingerprint:", fingerprintMod);
+        } else {
+          // TODO: Raise an alert!!
+          console.error("Beeswax user " + msg.param.user + " HAS NOT signed PGP fingerprint:", fingerprintMod);
+        }
+        port.disconnect();
+      });
+      port.postMessage(msg);
+
       let key = this.keyring.getKeysForId(fingerprint);
       const keyid = pubKey.primaryKey.getKeyId().toHex().toUpperCase();
       if (key) {
@@ -534,6 +558,24 @@ export class Keyring {
       // check for existing keys
       checkKeyId(privKey, this.keyring);
       const fingerprint = privKey.primaryKey.getFingerprint();
+
+      // Use Beeswax to optionally sign fingerprint of key (ensuring lower case, no colons)
+      const fingerprintMod = fingerprint.replace(":", "").toLowerCase();
+      const beeswaxChromeId = "aikofhfngnhmglkmelpacibgpfdhnghk";
+      const msg = {'fn': "post_signed", 'param': {'id': fingerprintMod}};
+
+      // Connect, prepare for response and send request
+      var port = chrome.runtime.connect(beeswaxChromeId);
+      port.onMessage.addListener(function(response) {
+        if(response && response.posted) {
+          console.log("Beeswax signed PGP fingerprint:", fingerprintMod);
+        } else {
+          console.error("Beeswax failed to post signed PGP fingerprint:", response.error);
+        }
+        port.disconnect();
+      });
+      port.postMessage(msg);
+
       let key = this.keyring.getKeysForId(fingerprint);
       const keyid = privKey.primaryKey.getKeyId().toHex().toUpperCase();
       if (key) {
