@@ -25,11 +25,11 @@
   },
   "beeswax_sign_private_keys": {
     "description": "Post to Twitter a Beeswax signature on the fingerprint of imported private keys.",
-    "message": "Sign Private Keys:"
+    "message": "Sign Private Keys: "
   },
   "beeswax_verify_keys": {
     "description": "Verify that imported public keys have been signed by the specified Beeswax account",
-    "message": "Verify Keys Were Signed By Beeswax Handle:"
+    "message": "Verify Keys Were Signed By Beeswax Handle"
   },
   "change_link": {
     "message": "Change",

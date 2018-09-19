@@ -507,16 +507,15 @@ export class Keyring {
         const msg = {'fn': "user_signed", 'param': {'user': verifyBeeswaxHandle, 'id': fingerprintMod}};
 
         // Connect, prepare for response and send request
-        let port = chrome.runtime.connect(beeswaxChromeId);
-        port.onMessage.addListener(function(response) {
-          if(!response || response.error) {
+        const port = chrome.runtime.connect(beeswaxChromeId);
+        port.onMessage.addListener(response => {
+          if (!response || response.error) {
             console.error("Beeswax failed to check signed PGP fingerprint:", response ? response.error : response);
-          }
-          else if (response.verified) {
-            console.log("Beeswax user " + msg.param.user + " signed PGP fingerprint:", fingerprintMod);
+          } else if (response.verified) {
+            console.log("Beeswax user", msg.param.user, "signed PGP fingerprint:", fingerprintMod);
           } else {
             // TODO: Raise an alert!!
-            console.error("Beeswax user " + msg.param.user + " HAS NOT signed PGP fingerprint:", fingerprintMod);
+            console.error("Beeswax user", msg.param.user, "HAS NOT signed PGP fingerprint:", fingerprintMod);
           }
           port.disconnect();
         });
@@ -570,8 +569,8 @@ export class Keyring {
         const msg = {'fn': "post_signed", 'param': {'id': fingerprintMod}};
 
         // Connect, prepare for response and send request
-        let port = chrome.runtime.connect(beeswaxChromeId);
-        port.onMessage.addListener(function(response) {
+        const port = chrome.runtime.connect(beeswaxChromeId);
+        port.onMessage.addListener(response => {
           if (response && response.posted) {
             console.log("Beeswax signed PGP fingerprint:", fingerprintMod);
           } else {

@@ -32,13 +32,13 @@ l10n.register([
   'form_clear',
   'beeswax_import_options',         // Beeswax Options
   'beeswax_sign_private_keys',      // Sign Private Keys:
-  'beeswax_verify_keys'             // Verify Keys Were Signed By Beeswax Handles:
+  'beeswax_verify_keys'             // Verify Keys Were Signed By Beeswax Handle
 ]);
 
 export default class ImportKey extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {alert: [], armored: ''};
+    this.state = {alert: [], armored: '', signWithBeeswax: false, verifyKeyForHandle: ''};
     this.handleChangeFile = this.handleChangeFile.bind(this);
     this.handleClear = this.handleClear.bind(this);
   }
@@ -92,13 +92,13 @@ export default class ImportKey extends React.Component {
       if (publicKeys) {
         publicKeys.forEach(pub => {
           pub = mvelo.util.normalizeArmored(pub);
-          keys.push({type: 'public', armored: pub, verifyBeeswaxHandle: "Ryco117"});
+          keys.push({type: 'public', armored: pub, verifyBeeswaxHandle: this.state.verifyKeyForHandle});
         });
       }
       if (privateKeys) {
         privateKeys.forEach(priv => {
           priv = mvelo.util.normalizeArmored(priv);
-          keys.push({type: 'private', armored: priv, beeswaxSign: true});
+          keys.push({type: 'private', armored: priv, beeswaxSign: this.state.signWithBeeswax});
         });
       }
       if (!keys.length) {
@@ -168,9 +168,9 @@ export default class ImportKey extends React.Component {
             <label className="control-label" htmlFor="beeswaxOptions"><h4>{l10n.map.beeswax_import_options}</h4></label>
             <div id="beeswaxOptions">
               <label htmlFor="signPrivateKeys">{l10n.map.beeswax_sign_private_keys}</label>
-              <input id="signPrivateKeys" type="checkbox" /><br/>
+              <input id="signPrivateKeys" type="checkbox" value={this.state.signWithBeeswax} onChange={event => this.setState({signWithBeeswax: event.target.checked})} /><br />
               <label htmlFor="verifyBeeswaxHandles">{l10n.map.beeswax_verify_keys}</label>
-              <input id="verifyBeeswaxHandles" type="text" /><br/>
+              <input id="verifyBeeswaxHandles" type="text" value={this.state.verifyKeyForHandle} onChange={event => this.setState({verifyKeyForHandle: event.target.value})} className="form-control" /><br />
             </div>
           </div>
           <div className="form-group">
