@@ -19,6 +19,18 @@
     "description": "Alert header of category warning.",
     "message": "At least one domain match pattern is needed."
   },
+  "beeswax_import_options": {
+    "description": "Optional Beeswax functionalities for importing PGP keys.",
+    "message": "Beeswax Options"
+  },
+  "beeswax_sign_private_keys": {
+    "description": "Post to Twitter a Beeswax signature on the fingerprint of imported private keys.",
+    "message": "Sign Private Keys:"
+  },
+  "beeswax_verify_keys": {
+    "description": "Verify that imported public keys have been signed by the specified Beeswax account",
+    "message": "Verify Keys Were Signed By Beeswax Handle:"
+  },
   "change_link": {
     "message": "Change",
     "description": "Navigation link to change this setting."

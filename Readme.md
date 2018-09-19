@@ -10,7 +10,7 @@ Mailvelope uses the following OpenPGP implementation
 
   - [OpenPGP.js](http://openpgpjs.org/) for the Chrome Extension and for the Firefox Addon
   
-## Additions From This Fork
+## Additions Of This Fork (Beeswax)
 
 This fork is meant to allow for interoperability between the [Beeswax](https://github.com/web-priv/beeswax) extension and Mailvelope, for the purpose of using Beeswax's private key as a root certificate for signing and verifying PGP Public keys over Twitter, thus allowing a PGP fingerprint to be verified as associated with a specific Twitter user, giving more trust to said fingerprint.
 

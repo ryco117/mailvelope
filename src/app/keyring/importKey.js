@@ -29,7 +29,10 @@ l10n.register([
   'key_import_textarea',
   'key_import_multiple_keys',
   'form_import',
-  'form_clear'
+  'form_clear',
+  'beeswax_import_options',         // Beeswax Options
+  'beeswax_sign_private_keys',      // Sign Private Keys:
+  'beeswax_verify_keys'             // Verify Keys Were Signed By Beeswax Handles:
 ]);
 
 export default class ImportKey extends React.Component {
@@ -89,13 +92,13 @@ export default class ImportKey extends React.Component {
       if (publicKeys) {
         publicKeys.forEach(pub => {
           pub = mvelo.util.normalizeArmored(pub);
-          keys.push({type: 'public', armored: pub});
+          keys.push({type: 'public', armored: pub, verifyBeeswaxHandle: "Ryco117"});
         });
       }
       if (privateKeys) {
         privateKeys.forEach(priv => {
           priv = mvelo.util.normalizeArmored(priv);
-          keys.push({type: 'private', armored: priv});
+          keys.push({type: 'private', armored: priv, beeswaxSign: true});
         });
       }
       if (!keys.length) {
@@ -159,6 +162,15 @@ export default class ImportKey extends React.Component {
             <div>{l10n.map.key_import_multiple_keys}</div>
             <div className="help-block">
               <textarea id="newKey" value={this.state.armored} onChange={event => this.setState({armored: event.target.value})} style={{width: '100%', fontFamily: 'monospace'}} className="form-control" rows="12" spellCheck="false" autoComplete="off"></textarea>
+            </div>
+          </div>
+          <div className="form-group">
+            <label className="control-label" htmlFor="beeswaxOptions"><h4>{l10n.map.beeswax_import_options}</h4></label>
+            <div id="beeswaxOptions">
+              <label htmlFor="signPrivateKeys">{l10n.map.beeswax_sign_private_keys}</label>
+              <input id="signPrivateKeys" type="checkbox" /><br/>
+              <label htmlFor="verifyBeeswaxHandles">{l10n.map.beeswax_verify_keys}</label>
+              <input id="verifyBeeswaxHandles" type="text" /><br/>
             </div>
           </div>
           <div className="form-group">
